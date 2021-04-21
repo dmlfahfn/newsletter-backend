@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
 router.post("/new", (req, res) => {
 
   let newUser = req.body;
-  console.log(req.body);
+  //console.log(req.body);
 
   fs.readFile("users.json", (err, data) => {
     if (err) {
@@ -30,10 +30,7 @@ router.post("/new", (req, res) => {
     }
 
     let users = JSON.parse(data);
-    users.subscription = false;
     users.push(newUser)
-    
-    console.log(users);
 
     fs.writeFile("users.json", JSON.stringify(users, null, 2), (err) => {
       if (err){
@@ -44,6 +41,34 @@ router.post("/new", (req, res) => {
   });
 
   res.json("ny användare");
+});
+
+router.post("/login", (req, res) => {
+
+  let user = req.body;
+  //console.log(user);
+
+  fs.readFile("users.json", (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+
+    let users = JSON.parse(data);
+    //console.log(users);
+    let findUser = users.find((users) => users.username == user.username && users.password == user.password);
+    console.log(findUser);
+
+    // Databas kopplat, då köra koden nedan
+    // users.find({"username": user.username},{"password": user.password}).toArray()
+    // .then(results => {
+    //      console.log(results)
+    // });
+
+  });
+
+  
+
+  res.json("logga in")
 });
 
 module.exports = router;
