@@ -19,4 +19,28 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.post("/new", (req, res) => {
+
+  let newUser = req.body;
+  console.log(req.body);
+
+  fs.readFile("users.json", (err, data) => {
+    if (err) {
+      console.log(err);
+    }
+
+    let users = JSON.parse(data);
+    users.push(newUser)
+
+    fs.writeFile("users.json", JSON.stringify(users, null, 2), (err) => {
+      if (err){
+        console.log(err);
+      };
+    });
+
+  });
+
+  res.json("ny användare");
+});
+
 module.exports = router;
