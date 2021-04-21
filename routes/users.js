@@ -61,7 +61,8 @@ router.post("/login", (req, res) => {
     let findUser = users.find((users) => users.username == user.username && users.password == user.password);
     
     if (findUser){
-      res.json(findUser.username, findUser.subscription)
+      let data = {username: findUser.username, subscription: findUser.subscription};
+      res.json(data)
     } else {
       res.send("Wrong details")
     }
