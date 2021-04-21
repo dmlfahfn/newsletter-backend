@@ -30,7 +30,10 @@ router.post("/new", (req, res) => {
     }
 
     let users = JSON.parse(data);
+    users.subscription = false;
     users.push(newUser)
+    
+    console.log(users);
 
     fs.writeFile("users.json", JSON.stringify(users, null, 2), (err) => {
       if (err){

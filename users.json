@@ -1,18 +1,17 @@
 [
   {
     "username": "durre",
-    "password": "durre"
+    "password": "durre",
+    "subscription": false
   },
   {
     "username": "janne",
-    "password": "janne"
+    "password": "janne",
+    "subscription": false
   },
   {
     "username": "test",
-    "password": "test"
-  },
-  {
-    "username": "htdh",
-    "password": "jfgj"
+    "password": "test",
+    "subscription": true
   }
 ]
