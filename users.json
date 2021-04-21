@@ -2,16 +2,19 @@
   {
     "username": "durre",
     "password": "durre",
-    "subscription": false
-  },
-  {
-    "username": "janne",
-    "password": "janne",
-    "subscription": false
+    "subscription": false,
+    "id": "DU5T5MbBvkle2Omq"
   },
   {
     "username": "test",
     "password": "test",
-    "subscription": true
+    "subscription": true,
+    "id": "usz3cPGG51tCaJEe"
+  },
+  {
+    "username": "janne",
+    "password": "kemi",
+    "subscription": false,
+    "id": "TiebeNPnZc4mdFiD"
   }
 ]

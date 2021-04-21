@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const fs = require("fs");
 const cors = require("cors");
+const rand = require("random-key");
 
 router.use(cors());
 
@@ -19,10 +20,12 @@ router.get('/', function(req, res, next) {
   });
 });
 
+//New User
 router.post("/new", (req, res) => {
 
   let newUser = req.body;
-  //console.log(req.body);
+  newUser.id = rand.generate();
+  console.log(newUser);
 
   fs.readFile("users.json", (err, data) => {
     if (err) {
@@ -43,10 +46,10 @@ router.post("/new", (req, res) => {
   res.json("ny användare");
 });
 
+//Sending Data for logIn
 router.post("/login", (req, res) => {
 
   let user = req.body;
-  //console.log(user);
 
   fs.readFile("users.json", (err, data) => {
     if (err) {
@@ -54,9 +57,14 @@ router.post("/login", (req, res) => {
     }
 
     let users = JSON.parse(data);
-    //console.log(users);
+
     let findUser = users.find((users) => users.username == user.username && users.password == user.password);
-    console.log(findUser);
+    
+    if (findUser){
+      res.json(findUser.username, findUser.subscription)
+    } else {
+      res.send("Wrong details")
+    }
 
     // Databas kopplat, då köra koden nedan
     // users.find({"username": user.username},{"password": user.password}).toArray()
@@ -65,10 +73,6 @@ router.post("/login", (req, res) => {
     // });
 
   });
-
-  
-
-  res.json("logga in")
 });
 
 module.exports = router;
