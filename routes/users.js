@@ -3,21 +3,19 @@ var router = express.Router();
 const fs = require("fs");
 const cors = require("cors");
 const rand = require("random-key");
+const cryptoJS = require("crypto-js");
 
 router.use(cors());
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
-  fs.readFile("users.json", (err, data) => {
-    if (err){
-      console.log(err);
-    };
+  req.app.locals.db.collection("users").find().toArray()
 
-    let users = JSON.parse(data);
+  .then(results=>{
+    res.send(results);
 
-    res.json(users);
-  });
+  })
 });
 
 //New User
@@ -26,46 +24,49 @@ router.post("/new", (req, res) => {
   let newUser = req.body;
   newUser.id = rand.generate();
   console.log(newUser);
+  let cryptPassword = cryptoJS.AES.encrypt(newUser.password, "bismillah").toString();
+  newUser.password = cryptPassword; 
+  req.app.locals.db.collection("users").insertOne(newUser)
 
-  fs.readFile("users.json", (err, data) => {
-    if (err) {
-      console.log(err);
-    }
+  .then(result=>{
 
-    let users = JSON.parse(data);
-    users.push(newUser)
+ console.log(result);
 
-    fs.writeFile("users.json", JSON.stringify(users, null, 2), (err) => {
-      if (err){
-        console.log(err);
-      };
-    });
+ 
+
+ res.redirect("/");
 
   });
-
-  res.json("ny användare");
 });
 
 //Sending Data for logIn
 router.post("/login", (req, res) => {
 
   let user = req.body;
+  
+  let password = cryptoJS.AES.decrypt(user.password, "bismillah").toString();
+  req.app.locals.db.collection("users").find({"username": user.username, "password": password, subscription: false}).toArray()
 
-  fs.readFile("users.json", (err, data) => {
-    if (err) {
-      console.log(err);
-    }
+  .then(result=>{
 
-    let users = JSON.parse(data);
+ console.log(result);
 
-    let findUser = users.find((users) => users.username == user.username && users.password == user.password);
+ 
+
+ res.json(result && result.length && result[0]);
+
+  });
+
+    // let users = JSON.parse(data);
+
+    // let findUser = users.find((users) => users.username == user.username && users.password == user.password);
     
-    if (findUser){
-      let data = {username: findUser.username, subscription: findUser.subscription, id: findUser.id};
-      res.json(data)
-    } else {
-      res.send("Wrong details")
-    }
+    // if (findUser){
+    //   let data = {username: findUser.username, subscription: findUser.subscription, id: findUser.id};
+    //   res.json(data)
+    // } else {
+    //   res.send("Wrong details")
+    // }
 
     // Databas kopplat, då köra koden nedan
     // users.find({"username": user.username},{"password": user.password}).toArray()
@@ -73,7 +74,7 @@ router.post("/login", (req, res) => {
     //      console.log(results)
     // });
 
-  });
-});
+   });
+// });
 
 module.exports = router;

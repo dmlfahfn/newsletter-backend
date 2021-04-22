@@ -1,20 +1,23 @@
 [
   {
-    "username": "durre",
-    "password": "durre",
+    "username": "janne",
+    "email": "janne@gmail.com",
+    "password": "kemi",
     "subscription": false,
-    "id": "DU5T5MbBvkle2Omq"
+    "id": "TUfBMvTmWpFbiBs8"
   },
   {
     "username": "test",
+    "email": "test@gmail.com",
     "password": "test",
-    "subscription": true,
-    "id": "usz3cPGG51tCaJEe"
+    "subscription": false,
+    "id": "VrkZBR8nVK2Z1pvE"
   },
   {
-    "username": "janne",
-    "password": "kemi",
+    "username": "durre",
+    "email": "durre@gmail.com",
+    "password": "durre",
     "subscription": false,
-    "id": "TiebeNPnZc4mdFiD"
+    "id": "17ffOaSoVBgeDByW"
   }
 ]
