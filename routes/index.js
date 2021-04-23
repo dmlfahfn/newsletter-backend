@@ -3,7 +3,6 @@ var router = express.Router();
 const fs = require("fs");
 const cors = require("cors");
 const rand = require("random-key");
-const cryptoJS = require("crypto-js");
 
 router.use(cors());
 
