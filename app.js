@@ -11,7 +11,7 @@ var app = express();
 const MongoClient=require("mongodb").MongoClient;
 const client = new MongoClient("mongodb+srv://adminUser:adminPassword@cluster0.mhts8.mongodb.net/users?retryWrites=true&w=majority");
 
-MongoClient.connect("mongodb+srv://adminUser:adminPassword@cluster0.mhts8.mongodb.net/users?retryWrites=true&w=majority"//{​​​​​
+MongoClient.connect("mongodb+srv://adminUser:adminPassword@cluster0.mhts8.mongodb.net/users?retryWrites=true&w=majority",{ useUnifiedTopology: true }
 ,(err, client)=>{
 
     console.log("Database  is conected");
