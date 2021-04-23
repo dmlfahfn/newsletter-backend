@@ -32,17 +32,30 @@ let content = `<div><h2>Users and Subscribers</h2></div>`;
 req.app.locals.db.collection("users").find().toArray()
 
 .then(results=>{
-
+  content += "<ul>"
+  const subscribers = [];
   for (users in results){
     content += `
-      <ul>
-      <li> <b>User:</b> ${results[users].username} <b>Mail:</b> ${results[users].email} <b> ${results[users].subscription? `Subscribed to Newsletter`: `Not Subscribed to Newsletter`} </b> </li>
-      </ul>
+    <li> <b>User:</b> ${results[users].username}</li>
      `
+     if (results[users].subscription){
+       subscribers.push(results[users]);
+     }
+    }
+  
+    content += "</ul>";
+  for (const user of subscribers){
+    if (user.subscription){
+      content += `<div><b>Mail:</b> ${user.email} <b> ${user.subscription? `Subscribed to Newsletter`: `Not Subscribed to Newsletter`} </b><div>`
+    } else {
+      console.log("No Subscription!");
+    }
   }
+
   res.send(content);
 
 })
 });
+
 
 module.exports = router;
