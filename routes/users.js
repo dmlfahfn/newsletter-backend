@@ -79,7 +79,6 @@ router.post("/login", (req, res) => {
 
   });
 
-
 router.post("/change", (req, res) => {
   let user = req.body;
   logIn(req).then(result => {
